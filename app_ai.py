@@ -1,4 +1,6 @@
+import os
 from flask import Flask, request, jsonify, render_template
+
 from signal_engine import extract_signals
 from risk_engine import calculate_risk
 from response_engine import apply_security_response
@@ -6,47 +8,57 @@ from security_logger import log_security_event
 
 app = Flask(__name__)
 
-# 🔐 Simple API protection
-API_KEY = "manikanta-securewatch-key"
+# 🔐 API Key (from environment for security)
+API_KEY = os.environ.get("API_KEY", "manikanta-securewatch-key")
+
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/analyze", methods=["POST"])
 def analyze_security():
-    # --- API key check ---
+    # --- API key validation ---
     client_key = request.headers.get("X-API-KEY")
     if client_key != API_KEY:
         return jsonify({"error": "Unauthorized"}), 401
 
-    activity = request.json
+    # --- Validate JSON ---
+    activity = request.get_json()
+    if not activity:
+        return jsonify({"error": "Invalid input"}), 400
 
-    # 1️⃣ Signal extraction
-    signals = extract_signals(activity)
+    try:
+        # 1️⃣ Signal extraction
+        signals = extract_signals(activity)
 
-    # 2️⃣ Risk calculation
-    risk = calculate_risk(signals)
+        # 2️⃣ Risk calculation
+        risk = calculate_risk(signals)
 
-    # 3️⃣ Security response
-    actions = apply_security_response(risk, signals)
+        # 3️⃣ Automated security response
+        actions = apply_security_response(risk, signals)
 
-    # 4️⃣ Logging critical incidents
-    if risk["severity"] in ["High", "Critical"]:
-        log_security_event(
-            f"[INCIDENT] Severity={risk['severity']} | "
-            f"Risk={risk['risk_score']} | "
-            f"Threat={risk['threat_type']} | "
-            f"Actions={actions}"
-        )
+        # 4️⃣ Log serious incidents
+        if risk["severity"] in ["High", "Critical"]:
+            log_security_event(
+                f"[SECURITY INCIDENT] "
+                f"Severity={risk['severity']} | "
+                f"Risk={risk['risk_score']} | "
+                f"Threat={risk['threat_type']} | "
+                f"Actions={actions}"
+            )
 
-    return jsonify({
-        "risk_score": risk["risk_score"],
-        "severity": risk["severity"],
-        "threat_type": risk["threat_type"],
-        "reasons": risk["reasons"],
-        "actions": actions
-    })
+        return jsonify({
+            "risk_score": risk["risk_score"],
+            "severity": risk["severity"],
+            "threat_type": risk["threat_type"],
+            "reasons": risk["reasons"],
+            "actions": actions
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/incidents", methods=["GET"])
@@ -61,4 +73,5 @@ def incidents():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
