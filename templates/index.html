@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI SecureWatch</title>
 
-  <!-- Tailwind CDN -->
+  <!-- TAB TITLE -->
+  <title>AI SecureWatch | Cloud Security SOC</title>
+
+  <!-- ✅ INLINE SVG FAVICON (NO IMAGE FILE) -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+      <path fill='%2306b6d4' d='M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z'/>
+      <path fill='%23ffffff' d='M10.5 13l-2-2 1.4-1.4L10.5 10.2l4.6-4.6L16.5 7z'/>
+    </svg>">
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
@@ -29,36 +39,43 @@
 
   <!-- HEADER -->
   <header class="max-w-7xl mx-auto px-6 py-6 flex items-center gap-4">
-    <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+    <!-- WEBSITE ICON (EMOJI stays here) -->
+    <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center text-xl">
       🛡️
     </div>
     <div>
       <h1 class="text-2xl font-bold text-white">AI SecureWatch</h1>
-      <p class="text-sm text-slate-400">AI-Driven Cloud Security Monitoring Platform</p>
+      <p class="text-sm text-slate-400">
+        AI-Driven Cloud Security Monitoring Platform
+      </p>
     </div>
   </header>
 
   <!-- MAIN -->
   <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- LEFT PANEL -->
+    <!-- LEFT -->
     <section class="lg:col-span-4 space-y-6">
-
       <div class="bg-slate-800/70 backdrop-blur border border-white/10 rounded-xl p-6">
         <h2 class="font-semibold mb-4 text-white">Threat Analysis Configuration</h2>
 
         <div class="space-y-3">
-          <input id="hour" type="number" placeholder="Login Hour (0–23)" class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
-          <input id="failed" type="number" placeholder="Failed Logins" class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
-          <input id="rpm" type="number" placeholder="Requests / Minute" class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
+          <input id="hour" type="number" placeholder="Login Hour (0–23)"
+            class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
+          <input id="failed" type="number" placeholder="Failed Logins"
+            class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
+          <input id="rpm" type="number" placeholder="Requests / Minute"
+            class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
 
-          <select id="role" class="w-full p-3 rounded bg-slate-900 border border-slate-700">
+          <select id="role"
+            class="w-full p-3 rounded bg-slate-900 border border-slate-700">
             <option value="">Select Role</option>
             <option value="1">User</option>
             <option value="2">Admin</option>
           </select>
 
-          <input id="iprep" type="number" placeholder="IP Reputation (0/1)" class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
+          <input id="iprep" type="number" placeholder="IP Reputation (0/1)"
+            class="w-full p-3 rounded bg-slate-900 border border-slate-700"/>
 
           <button id="analyzeBtn"
             class="w-full mt-4 py-3 rounded bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-white hover:scale-[1.02] transition">
@@ -67,50 +84,40 @@
         </div>
       </div>
 
-      <!-- STATUS -->
-      <div id="statusBox"
-        class="bg-slate-800/70 border border-emerald-400 rounded-xl p-5 flex items-center justify-between">
-        <div>
-          <p class="text-xs text-slate-400">STATUS</p>
-          <p class="text-xl font-bold text-white">✔ SYSTEM READY</p>
-        </div>
-        <div class="text-2xl"></div>
+      <div class="bg-slate-800/70 border border-emerald-400 rounded-xl p-5">
+        <p class="text-xs text-slate-400">STATUS</p>
+        <p class="text-xl font-bold text-white">✔ SYSTEM READY</p>
       </div>
     </section>
 
-    <!-- RIGHT PANEL -->
+    <!-- RIGHT -->
     <section class="lg:col-span-8 space-y-6">
-
-      <!-- LIVE ASSESSMENT -->
       <div class="grid grid-cols-2 gap-6">
         <div class="bg-slate-800/70 border border-white/10 rounded-xl p-6">
           <p class="text-sm text-slate-400">Risk Score</p>
           <p id="riskScore" class="text-3xl font-mono text-white">–</p>
         </div>
-
         <div class="bg-slate-800/70 border border-white/10 rounded-xl p-6">
           <p class="text-sm text-slate-400">Severity</p>
           <p id="severity" class="text-3xl font-mono text-white">–</p>
         </div>
       </div>
 
-      <!-- ACTIONS -->
       <div class="bg-slate-800/70 border border-white/10 rounded-xl p-6">
         <h2 class="font-semibold mb-3">Automated Security Actions</h2>
-        <div id="actions" class="space-y-2 text-sm text-slate-300 italic">
+        <div id="actions" class="text-sm text-slate-300 italic">
           Waiting for analysis trigger…
         </div>
       </div>
 
-      <!-- INCIDENTS -->
       <div class="bg-slate-800/70 border border-white/10 rounded-xl p-6">
         <h2 class="font-semibold mb-3">Recent Security Incidents</h2>
-        <ul id="incidentList" class="space-y-2 text-xs font-mono max-h-64 overflow-y-auto"></ul>
+        <ul id="incidentList"
+          class="space-y-2 text-xs font-mono max-h-64 overflow-y-auto"></ul>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="text-center text-xs text-slate-500 py-8">
     © 2026 <strong>Manikanta</strong> — AI SecureWatch. All rights reserved.
   </footer>
