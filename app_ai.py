@@ -9,7 +9,8 @@ from security_logger import log_security_event
 app = Flask(__name__)
 
 # 🔐 API Key (from environment for security)
-API_KEY = os.getenv("API_KEY")
+API_KEY = os.environ.get("API_KEY", "manikanta-securewatch-key")
+
 
 @app.route("/")
 def index():
