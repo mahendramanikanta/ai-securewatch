@@ -1,0 +1,173 @@
+/* -------- RESET -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* -------- BACKGROUND -------- */
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, #0a2a43, #020c16),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 255, 0.05),
+      rgba(0, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 255, 255, 0.05),
+      rgba(0, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* -------- LAYOUT -------- */
+body {
+  min-height: 100vh;
+  color: #e0f7ff;
+}
+
+header,
+main,
+footer {
+  position: relative;
+  z-index: 2;
+}
+
+header {
+  padding: 30px;
+}
+
+header h1 {
+  font-size: 2.4rem;
+}
+
+header p {
+  color: #9ad7ff;
+  margin-top: 6px;
+}
+
+/* -------- PANEL -------- */
+.panel {
+  margin: 30px auto;
+  padding: 30px;
+  width: 90%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+}
+
+/* -------- INPUTS -------- */
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.inputs input {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e0f7ff;
+  outline: none;
+}
+
+.inputs input::placeholder {
+  color: #8bbfdc;
+}
+
+/* -------- BUTTON -------- */
+button {
+  margin-top: 20px;
+  padding: 14px 30px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #00ffe7, #00bcd4);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+/* -------- STATUS -------- */
+.status {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.status.loading {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  animation: pulse 1.4s infinite;
+}
+
+.status.safe {
+  background: #00e676;
+  color: #003300;
+}
+
+.status.medium {
+  background: #ffeb3b;
+  color: #222;
+}
+
+.status.high {
+  background: #ff9800;
+}
+
+.status.critical {
+  background: #ff3b3b;
+}
+
+/* -------- ANIMATION -------- */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* -------- ACTIONS / INCIDENTS -------- */
+.actions,
+.incidents {
+  margin-top: 25px;
+}
+
+.actions ul,
+.incidents ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.actions li,
+.incidents li {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #cdefff;
+}
+
+/* -------- FOOTER -------- */
+footer {
+  margin: 40px 0;
+  text-align: center;
+  color: #7fbcd8;
+  font-size: 0.85rem;
+}
